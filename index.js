@@ -6,7 +6,7 @@ const titlePrefix = ":title="
 
 module.exports = function gatsbyRemarkCodeTitles(_ref, options) {
   const markdownAST = _ref.markdownAST;
-  console.log(_ref)
+  console.log(markdownAST)
   const customClassName = options.className;
 //   visit(markdownAST, "code", (node, index) => {
 //     const lang = node.lang || "";
