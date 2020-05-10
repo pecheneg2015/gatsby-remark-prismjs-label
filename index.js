@@ -20,7 +20,7 @@ let test = {
     },
     {
       type: 'code',
-      lang: 'json:label:test',
+      lang: 'json:title=test',
       meta: null,
       value: '{\n  "compilerOptions": {\n    ···\n    "allowJs": true\n  }\n}',
       position: ""
@@ -51,16 +51,14 @@ let test = {
 let data = {};
 data.markdownAST = test;
 
-const titlePrefix = ":title="
-
 let getTitle = (lang, separator) => {
   let ind = lang.lastIndexOf(separator);
-  let title = ind === -1 ? lang.slice(ind + separator.length + 1) : ""
+  let title = ind === -1 ?  "" : lang.slice(ind + separator.length) ;
   return title.length > 0 ? title : null;
 };
 
 let drawTemplate = (templateGenerator, title) => {
-  if (!template) {
+  if (!templateGenerator) {
     return ` 
     <div class="gatsby-code-title">
         <span>${title}</span>
@@ -72,13 +70,13 @@ let drawTemplate = (templateGenerator, title) => {
 
 let separator = ":title=";
 
- module.exports = function gatsbyRemarkCodeTitles(_ref, options) {
+ module.exports =  function gatsbyRemarkCodeTitles(_ref, options) {
   const markdownAST = _ref.markdownAST;
 
   if (markdownAST.type == 'root' && Array.isArray(markdownAST.children)) {
     for (let i = 0; i < markdownAST.children.length; i++) {
       if (markdownAST.children[i].type == "code") {
-        let title = getTitle(markdownAST.children[i], separator);
+        let title = getTitle(markdownAST.children[i].lang, separator);
         if (title) {
           let titleNode =  {
             type: "html",
@@ -88,14 +86,13 @@ let separator = ":title=";
           markdownAST.children.splice(i, 0, titleNode)
           i++
         }
-        
       }
     }
   }
   return markdownAST;
 };
 
-// gatsbyRemarkCodeTitles(data,{})
+// gatsbyRemarkCodeTitles(data,{templateGenerator:(title)=>{return `<p>${title}</p>`}})
 
 
 /*
