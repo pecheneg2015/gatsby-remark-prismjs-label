@@ -57,6 +57,11 @@ let getTitle = (lang, separator) => {
   return title.length > 0 ? title : null;
 };
 
+let clearTitle = (lang, separator) => {
+  let ind = lang.lastIndexOf(separator);
+  return ind === -1 ?  lang: lang.slice(0,ind) ;
+};
+
 let drawTemplate = (templateGenerator, title) => {
   if (!templateGenerator) {
     return ` 
@@ -77,6 +82,7 @@ let separator = ":title=";
     for (let i = 0; i < markdownAST.children.length; i++) {
       if (markdownAST.children[i].type == "code") {
         let title = getTitle(markdownAST.children[i].lang, separator);
+        markdownAST.children[i].lang = clearTitle(markdownAST.children[i].lang, separator); 
         if (title) {
           let titleNode =  {
             type: "html",
