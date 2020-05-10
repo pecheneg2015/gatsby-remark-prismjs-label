@@ -100,7 +100,22 @@ let separator = ":title=";
 
 // gatsbyRemarkCodeTitles(data,{templateGenerator:(title)=>{return `<p>${title}</p>`}})
 
+/*
 
+    margin-bottom: 0px;
+    position: relative;
+    top: 2.2rem;
+    left: 80%;
+    z-index: 2;
+    width: auto;
+    max-width: 20%;
+    background: blanchedalmond;
+    padding-left: 5px;
+    padding-right: 5px;
+    overflow: scroll;
+    display: flex;
+
+*/
 /*
      font: 100%/1.75 'Merriweather','Georgia',serif;
      font-family: 'Merriweather','Georgia',serif;
