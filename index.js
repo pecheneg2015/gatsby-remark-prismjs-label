@@ -57,11 +57,30 @@ const titlePrefix = ":title="
 
 
 
-// module.exports = 
-function gatsbyRemarkCodeTitles(_ref, options) {
+module.exports =function gatsbyRemarkCodeTitles(_ref, options) {
   const markdownAST = _ref.markdownAST;
-  console.log(markdownAST)
+
   const customClassName = options.className;
+  if( markdownAST.type=='root' && Array.isArray(markdownAST.children)){
+    for(let i =0;i<markdownAST.children.length;i++){
+      // console.log(markdownAST.children[i].type)
+      if(markdownAST.children[i].type=="code"){
+        console.log(i)
+            const titleNode = {
+      type: "html",
+      value: `
+         <div class="gatsby-code-title">
+           <span>test</span>
+         </div>
+        `
+     };
+        markdownAST.children.splice(i,0,    titleNode)
+        i++
+      }
+    }
+
+  }
+  console.log(markdownAST)
 //   visit(markdownAST, "code", (node, index) => {
 //     const lang = node.lang || "";
 //     const separatorIndex = lang.lastIndexOf(titlePrefix);
@@ -88,4 +107,4 @@ function gatsbyRemarkCodeTitles(_ref, options) {
   return markdownAST;
 };
 
-gatsbyRemarkCodeTitles(data,{})
+// gatsbyRemarkCodeTitles(data,{})
