@@ -1,102 +1,104 @@
 "use strict";
 
 let test = {
-  type: 'root',
-  children: [
-    {
-      type: 'heading',
-      depth: 2,
-      children: "",
-      position: "",
-    },
-    { type: 'paragraph', children: "", position: "" },
-    {
-      type: 'list',
-      ordered: false,
-      start: null,
-      spread: false,
-      children: "",
-      position: ""
-    },
-    {
-      type: 'code',
-      lang: 'json:title=test',
-      meta: null,
-      value: '{\n  "compilerOptions": {\n    ···\n    "allowJs": true\n  }\n}',
-      position: ""
-    },
-    {
-      type: 'code',
-      lang: 'javascript',
-      meta: null,
-      value: '/**\n' +
-        ' * @param {number} x - A number param.\n' +
-        ' * @param {number} y - A number param.\n' +
-        ' * @returns {number} This is the result\n' +
-        ' */\n' +
-        'function add(x, y) {\n' +
-        '  return x + y;\n' +
-        '}\n' +
-        '/** @typedef {{ prop1: string, prop2: string, prop3?: number }} SpecialType */\n' +
-        '/** @typedef {(data: string, index?: number) => boolean} Predicate */',
-      position: ""
-    },
-  ],
-  position: {
-    start: { line: 1, column: 1, offset: 0 },
-    end: { line: 71, column: 236, offset: 4787 }
-  }
+    type: 'root',
+    children: [
+        {
+            type: 'heading',
+            depth: 2,
+            children: "",
+            position: "",
+        },
+        {type: 'paragraph', children: "", position: ""},
+        {
+            type: 'list',
+            ordered: false,
+            start: null,
+            spread: false,
+            children: "",
+            position: ""
+        },
+        {
+            type: 'code',
+            lang: 'json:title=test',
+            meta: null,
+            value: '{\n  "compilerOptions": {\n    ···\n    "allowJs": true\n  }\n}',
+            position: ""
+        },
+        {
+            type: 'code',
+            lang: 'javascript',
+            meta: null,
+            value: '/**\n' +
+                ' * @param {number} x - A number param.\n' +
+                ' * @param {number} y - A number param.\n' +
+                ' * @returns {number} This is the result\n' +
+                ' */\n' +
+                'function add(x, y) {\n' +
+                '  return x + y;\n' +
+                '}\n' +
+                '/** @typedef {{ prop1: string, prop2: string, prop3?: number }} SpecialType */\n' +
+                '/** @typedef {(data: string, index?: number) => boolean} Predicate */',
+            position: ""
+        },
+    ],
+    position: {
+        start: {line: 1, column: 1, offset: 0},
+        end: {line: 71, column: 236, offset: 4787}
+    }
 }
 
 let data = {};
 data.markdownAST = test;
 
-let getTitle = (lang, separator) => {
-  let ind = lang.lastIndexOf(separator);
-  let title = ind === -1 ?  "" : lang.slice(ind + separator.length) ;
-  return title.length > 0 ? title : null;
+const getTitle = (lang, separator) => {
+    let ind = lang.lastIndexOf(separator);
+    let title = ind === -1 ? "" : lang.slice(ind + separator.length);
+    return title.length > 0 ? title : null;
 };
 
-let clearTitle = (lang, separator) => {
-  let ind = lang.lastIndexOf(separator);
-  return ind === -1 ?  lang: lang.slice(0,ind) ;
+const clearTitle = (lang, separator) => {
+    let ind = lang.lastIndexOf(separator);
+    return ind === -1 ? lang : lang.slice(0, ind);
 };
 
-let drawTemplate = (templateGenerator, title) => {
-  if (!templateGenerator) {
-    return ` 
-    <div class="gatsby-code-title">
-        <span>${title}</span>
-    </div>`;
-  } else {
-    return templateGenerator(title);
-  }
+const drawTemplate = (title, templateGenerator) => {
+    if (!templateGenerator) {
+        return `<div>${title}</div>`;
+    } else {
+        return templateGenerator(title);
+    }
 };
 
 let separator = ":title=";
 
- module.exports =  function gatsbyRemarkCodeTitles(_ref, options) {
-  const markdownAST = _ref.markdownAST;
-
-  if (markdownAST.type == 'root' && Array.isArray(markdownAST.children)) {
-    for (let i = 0; i < markdownAST.children.length; i++) {
-      if (markdownAST.children[i].type == "code") {
-        let title = getTitle(markdownAST.children[i].lang, separator);
-        markdownAST.children[i].lang = clearTitle(markdownAST.children[i].lang, separator); 
-        if (title) {
-          let titleNode =  {
-            type: "html",
-            value: drawTemplate(options.templateGenerator,title),
-            position: ""
-          };
-          markdownAST.children.splice(i, 0, titleNode)
-          i++
+function gatsbyRemarkCodeTitles(_ref, options) {
+    const markdownAST = _ref.markdownAST;
+    if (!options)
+        options = {};
+    if (markdownAST.type == 'root' && Array.isArray(markdownAST.children)) {
+        for (let i = 0; i < markdownAST.children.length; i++) {
+            if (markdownAST.children[i].type == "code" && markdownAST.children[i].lang) {
+                let title = getTitle(markdownAST.children[i].lang, separator);
+                markdownAST.children[i].lang = clearTitle(markdownAST.children[i].lang, separator);
+                if (title) {
+                    let titleNode = {
+                        type: "html",
+                        value: drawTemplate(title, options.templateGenerator),
+                        position: ""
+                    };
+                    markdownAST.children.splice(i, 0, titleNode)
+                    i++
+                }
+            }
         }
-      }
     }
-  }
-  return markdownAST;
+    return markdownAST;
 };
+
+
+export {gatsbyRemarkCodeTitles, getTitle, clearTitle, drawTemplate};
+// module.exports = gatsbyRemarkCodeTitles;
 
 // gatsbyRemarkCodeTitles(data,{templateGenerator:(title)=>{return `<p>${title}</p>`}})
 

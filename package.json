@@ -4,7 +4,7 @@
   "description": "A Gatsby remark plugin that will allows add label for code block",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/pecheneg2015/gatsby-remark-prismjs-label/issues"
   },
-  "homepage": "https://github.com/pecheneg2015/gatsby-remark-prismjs-label#readme"
+  "homepage": "https://github.com/pecheneg2015/gatsby-remark-prismjs-label#readme",
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.9.6",
+    "jest": "^26.0.1"
+  }
 }
