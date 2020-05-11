@@ -1,6 +1,6 @@
 {
   "name": "gatsby-remark-prismjs-label",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "A Gatsby remark plugin that will allows add label for code block",
   "main": "index.js",
   "scripts": {
@@ -12,6 +12,7 @@
   },
   "keywords": [
     "gatsbyjs",
+    "gatsby-plugin",
     "prismjs"
   ],
   "author": "Dmitriy Pechenin",
