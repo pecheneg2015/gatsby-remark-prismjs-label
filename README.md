@@ -1,6 +1,6 @@
 # gatsby-remark-prismjs-label
 A Gatsby remark plugin that will allows add label for code block
-![demo](./img/demo.png)
+![demo](https://raw.githubusercontent.com/pecheneg2015/gatsby-remark-prismjs-label/master/img/demo.PNG)
 
 ###Install
 
