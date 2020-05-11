@@ -98,6 +98,7 @@ function gatsbyRemarkCodeTitles(_ref, options) {
 
 
 export {gatsbyRemarkCodeTitles, getTitle, clearTitle, drawTemplate};
+export default gatsbyRemarkCodeTitles
 // module.exports = gatsbyRemarkCodeTitles;
 
 // gatsbyRemarkCodeTitles(data,{templateGenerator:(title)=>{return `<p>${title}</p>`}})
