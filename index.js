@@ -72,7 +72,7 @@ const drawTemplate = (title, templateGenerator) => {
 
 let separator = ":title=";
 
-function gatsbyRemarkCodeTitles(_ref, options) {
+ function gatsbyRemarkCodeTitles(_ref, options) {
     const markdownAST = _ref.markdownAST;
     if (!options)
         options = {};
@@ -97,8 +97,11 @@ function gatsbyRemarkCodeTitles(_ref, options) {
 };
 
 
-export {gatsbyRemarkCodeTitles, getTitle, clearTitle, drawTemplate};
-export default gatsbyRemarkCodeTitles
+module.exports.getTitle=getTitle;
+module.exports.clearTitle=clearTitle;
+module.exports.drawTemplate=drawTemplate;
+module.exports.gatsbyRemarkCodeTitles = gatsbyRemarkCodeTitles;
+//, clearTitle, drawTemplate};
 // module.exports = gatsbyRemarkCodeTitles;
 
 // gatsbyRemarkCodeTitles(data,{templateGenerator:(title)=>{return `<p>${title}</p>`}})

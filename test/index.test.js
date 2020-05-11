@@ -1,4 +1,9 @@
-import  {gatsbyRemarkCodeTitles, getTitle, clearTitle, drawTemplate} from "./../index"
+const customModule = require("./../index.js");
+const gatsbyRemarkCodeTitles =customModule.gatsbyRemarkCodeTitles;
+const getTitle =customModule.getTitle;
+const clearTitle =customModule.clearTitle;
+const drawTemplate =customModule.drawTemplate;
+// import  {gatsbyRemarkCodeTitles, getTitle, clearTitle, drawTemplate} from "./../index"
 import {describe, expect} from "@jest/globals";
 
 
